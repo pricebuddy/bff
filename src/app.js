@@ -1,11 +1,12 @@
 "use strict";
 const fastify = require("fastify");
+const products = require("../data/get-products.json");
 
 const build = (options = {}) => {
   const app = fastify(options);
 
-  app.get("/", async (request, reply) => {
-    return { hello: "world" };
+  app.get("/get-products", async (request, reply) => {
+    return products;
   });
 
   return app;
