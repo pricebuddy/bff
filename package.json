@@ -4,21 +4,47 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/server.js",
-    "test": "jest"
+    "start": "node index.js",
+    "test": "jest",
+    "migrate:up": "migrate-mongo up",
+    "migrate:down": "migrate-mongo down"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.20.0",
+    "eslint": "^7.10.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jest": "^24.0.2",
     "fastify": "^3.4.1",
-    "fastify-mongoose-driver": "^3.2.0"
+    "fastify-mongodb": "^2.0.1"
   },
   "devDependencies": {
-    "eslint": "^7.9.0",
-    "eslint-config-prettier": "^6.12.0",
-    "eslint-plugin-prettier": "^3.1.4",
     "jest": "^26.4.2",
     "pino-pretty": "^4.2.1",
     "prettier": "^2.1.2"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "es6": true,
+      "jest/globals": true,
+      "node": true
+    },
+    "plugins": [
+      "jest",
+      "prettier"
+    ],
+    "extends": [
+      "plugin:prettier/recommended",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2018
+    }
+  },
+  "prettier": {
+    "trailingComma": "es5"
   }
 }
