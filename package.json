@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "fastify": "^3.4.1"
+    "fastify": "^3.4.1",
+    "fastify-mongoose-driver": "^3.2.0"
   },
   "devDependencies": {
     "eslint": "^7.9.0",
