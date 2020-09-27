@@ -17,10 +17,6 @@ class ProductRepository {
   selectBySku(sku, sellerId) {
     return this.repository.selectBySku(sku, sellerId);
   }
-
-  updateSellerPduct(product) {
-    return this.repository.updateSellerProduct(product);
-  }
 }
 
 module.exports = ProductRepository;
