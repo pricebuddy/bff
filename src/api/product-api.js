@@ -5,6 +5,11 @@ const productApi = async (fastify) => {
     '/tenant/:id/products',
     async (req, reply) => getProducts(fastify, req, reply),
   );
+
+  fastify.get(
+    '/tenant/:tenantId/products/:sku',
+    async (req, reply) => getProduct(fastify, req, reply),
+  );
 };
 
 module.exports = productApi;

@@ -14,7 +14,11 @@ class ProductRepository {
     return this.repository.selectCompetitorProductsByParentIdAndCompetitorId(parentId, competitorId);
   }
 
-  updateSellerProduct(product) {
+  selectBySku(sku, sellerId) {
+    return this.repository.selectBySku(sku, sellerId);
+  }
+
+  updateSellerPduct(product) {
     return this.repository.updateSellerProduct(product);
   }
 }

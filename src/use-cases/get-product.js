@@ -3,4 +3,9 @@ const getProduct = async (id, repositories) => {
   return response;
 };
 
-module.exports = { getProduct };
+const getProductBySku = async (sku, sellerId, repositories) => {
+  const response = await repositories.productRepository.selectBySku(sku, sellerId);
+  return response;
+};
+
+module.exports = { getProduct, getProductBySku };

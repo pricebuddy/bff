@@ -8,6 +8,7 @@ const DomainRepository = require('../repository/domain-repositories');
 
 const { getCompetitors } = require('../use-cases/get-sellers');
 const { getMasterProduct } = require('../use-cases/get-master-product');
+const { getProductBySku } = require('../use-cases/get-product');
 const { getProductsBySellerId, getCompetitorProductByParentIdAndCompetitorId } = require('../use-cases/get-products');
 
 const getRecommendation = async (currentPrice, competitorPrices) => {
@@ -25,6 +26,44 @@ const getRecommendation = async (currentPrice, competitorPrices) => {
   });
 
   return response.data.suggestions;
+};
+
+const getProduct = async (fastify, req, reply) => {
+  const domainRepository = new DomainRepository(fastify);
+  const { tenantId, sku } = req.params;
+
+  const competitorPrices = [];
+  const competitors = await getCompetitors(domainRepository);
+
+  const product = await getProductBySku(parseInt(sku, 10), tenantId, domainRepository);
+
+  const masterProduct = await getMasterProduct(product.parentId, domainRepository);
+
+  for (const competitor of competitors) {
+    const competitorProduct = await
+    getCompetitorProductByParentIdAndCompetitorId(product.parentId, competitor.id, domainRepository);
+
+    const competitorPrice = competitorProduct ? {
+      competitorsName: competitor.name,
+      price: parseInt(competitorProduct.price.trim(), 10),
+      competitorsUrl: competitorProduct.url,
+      stock: 1,
+    } : {
+      stock: 0,
+    };
+
+    competitorPrices.push(competitorPrice);
+  }
+
+  const recommendation = await getRecommendation(product.price, competitorPrices);
+
+  return {
+    ...product,
+    name: masterProduct.name,
+    price: parseInt(product.price, 10),
+    competitorPrices,
+    recommendation,
+  };
 };
 
 const getProducts = async (fastify, req, reply) => {
@@ -76,5 +115,6 @@ const getProducts = async (fastify, req, reply) => {
 };
 
 module.exports = {
+  getProduct,
   getProducts,
 };

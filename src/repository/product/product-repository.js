@@ -10,6 +10,17 @@ const makeRepository = (fastify) => {
     return res.toArray();
   };
 
+  const selectBySku = async (sku, sellerId) => {
+    const { db } = fastify.mongo;
+
+    const collection = db.collection('products');
+    const query = { sku, sellerId };
+
+    const res = await collection.findOne(query);
+
+    return res;
+  };
+
   const selectCompetitorProductsByParentIdAndCompetitorId = async (parentId, competitorId) => {
     const { db } = fastify.mongo;
 
@@ -21,7 +32,11 @@ const makeRepository = (fastify) => {
     return res;
   };
 
-  return { selectCompetitorProductsByParentIdAndCompetitorId, sellectProductsBySeller };
+  return {
+    selectCompetitorProductsByParentIdAndCompetitorId,
+    sellectProductsBySeller,
+    selectBySku,
+  };
 };
 
 module.exports = makeRepository;
