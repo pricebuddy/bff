@@ -2,7 +2,7 @@ const log = require('pino')({ level: 'info' });
 const fastify = require('fastify')({ logger: log });
 const products = require('./data/get-products.json');
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 const mongoUrl = process.env.MONGO_HOST ? `mongodb://${process.env.MONGO_HOST}:27017/buddy` : 'mongodb://localhost:27017/buddy';
 
 const productApi = require('./src/api/product-api');
