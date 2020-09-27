@@ -46,7 +46,7 @@ const getProducts = async (fastify, req, reply) => {
 
         const competitorPrice = competitorProduct ? {
           competitorsName: competitor.name,
-          price: competitorProduct.price,
+          price: competitorProduct.price.trim(),
           competitorsUrl: competitorProduct.url,
           stock: 1,
         } : {
