@@ -2,11 +2,20 @@
     "url" : "https://www.paris.cl/set-bistro-mesa-hierro-2-sillas-outzen-505664999.html",
     "sellerId" : "13C4B1AA-30DB-4AFB-9FC6-FB913999A86B",
     "price" : "179990",
-    "sku" : "505664999"
+    "sku" : "505664999",
+    "parentId": 1
 },
 {
     "url" : "https://simple.ripley.cl/samsung-galaxy-s20-128gb-rosado-2000378677376p?s=o",
     "sellerId" : "38B93994-CC0B-4780-8266-B9123953D75A",
     "price" : "704990",
-    "sku" : "2000378677376P"
+    "sku" : "2000378677376P",
+    "parentId": 1
+},
+{
+    "url" : "https://www.falabella.com/falabella-cl/plans/14410919/Smartphone%20Y9S%20128GB/14410919?mkid=LA_A1_VER_1000008456",
+    "sellerId" : "CFFD9A07-59CD-4DB2-98C8-BD312AB643EF",
+    "price" : "3456",
+    "sku" : "7896557",
+    "parentId": 1
 }]

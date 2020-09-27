@@ -29,7 +29,9 @@ const makeRepository = (fastify) => {
     return res;
   };
 
-  return { selectAll, selectAllCompetitors, selectMySellers };
+  return {
+    selectAll, selectAllCompetitors, selectMySellers,
+  };
 };
 
 module.exports = makeRepository;

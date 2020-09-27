@@ -7,7 +7,18 @@ const makeRepository = (fastify) => {
 
     const res = await collection.find(query);
 
-    return res;
+    return res.toArray();
+  };
+
+  const selectByParentId = async (parentId) => {
+    const { db } = fastify.mongo;
+
+    const collection = db.collection('products');
+    const query = { parentId };
+
+    const res = await collection.find(query);
+
+    return res.toArray();
   };
 
   const updateSellerProduct = async (product) => {
@@ -20,7 +31,7 @@ const makeRepository = (fastify) => {
     return res;
   };
 
-  return { sellectProductsBySeller, updateSellerProduct };
+  return { selectByParentId, sellectProductsBySeller, updateSellerProduct };
 };
 
 module.exports = makeRepository;

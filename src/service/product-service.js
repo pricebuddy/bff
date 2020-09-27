@@ -1,20 +1,34 @@
+/* eslint-disable no-restricted-syntax */
 const DomainRepository = require('../repository/domain-repositories');
 
-const { getCompetitors, getSellerById } = require('../use-cases/get-sellers');
-const { getProductsBySellerId, getProductsByParentProductId } = require('../use-cases/get-products');
+const { getProductsBySellerId, getProductsByParentId } = require('../use-cases/get-products');
 
 const getProducts = async (fastify, req, reply) => {
   const domainRepository = new DomainRepository(fastify);
 
-  const { tenantId } = req.params;
+  const { id } = req.params;
 
-  const tenantProducts = await getProductsBySellerId(tenantId, domainRepository);
+  const tenantProducts = await getProductsBySellerId(id, domainRepository);
 
-  const response = await tenantProducts.forEach(async (product) => {
-    const competitorProducts = await getProductsByParentProductId(product.parentId);
-  });
+  const response = [];
+  await Promise.all(tenantProducts.map(async (product) => {
+    try {
+      const competitorProducts = await getProductsByParentId(product.parentId, domainRepository);
+      const competitorPrices = [];
 
-  return response;
+      for (const competitorProduct of competitorProducts) {
+        competitorPrices.push({
+          price: competitorProduct.price,
+        });
+      }
+
+      response.push({ ...product, competitorPrices });
+    } catch (error) {
+      fastify.log.error(`error ${error}`);
+    }
+  }));
+
+  return reply.send(response);
 };
 
 module.exports = {

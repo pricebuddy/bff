@@ -6,12 +6,16 @@ class ProductRepository {
     this.repository = makeRepository(fastify);
   }
 
-  updateSellerProduct(product) {
-    return this.repository.updateSellerProduct(product);
-  }
-
   sellectProductsBySeller(sellerId) {
     return this.repository.sellectProductsBySeller(sellerId);
+  }
+
+  selectByParentId(parentId) {
+    return this.repository.selectByParentId(parentId);
+  }
+
+  updateSellerProduct(product) {
+    return this.repository.updateSellerProduct(product);
   }
 }
 

@@ -11,14 +11,14 @@ fastify.get('/', (request, reply) => {
   reply.send(products);
 });
 
-productApi(fastify);
-
 fastify.register(require('fastify-mongodb'), {
   // force to close the mongodb connection when app stopped
   // the default value is false
   forceClose: true,
   url: mongoUrl,
 });
+
+productApi(fastify);
 
 fastify.listen(port, (err, address) => {
   if (err) {
