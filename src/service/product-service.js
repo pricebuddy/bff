@@ -1,25 +1,26 @@
 const DomainRepository = require('../repository/domain-repositories');
 
-const { getAllSellers } = require('../use-cases/get-sellers');
+const { getCompetitors, getSellerById } = require('../use-cases/get-sellers');
+const { getProductsBySellerId, getProductsByParentProductId } = require('../use-cases/get-products');
 
-const getProduct = async (fastify) => {
-  const response = { name: '' };
+const getProducts = async (fastify, req, reply) => {
+  const domainRepository = new DomainRepository(fastify);
 
-  return response;
-};
+  const { tenantId } = req.params;
 
-const getProducts = async (fastify) => {
-  const response = { name: '' };
+  const tenantProducts = await getProductsBySellerId(tenantId, domainRepository);
+
+  const response = await tenantProducts.forEach(async (product) => {
+    const competitorProducts = await getProductsByParentProductId(product.parentId);
+  });
 
   return response;
 };
 
 module.exports = {
-  getProduct,
   getProducts,
 };
 
-// {
 //     "name": "nombre",
 //     "thumbnail": "revisar",
 //     "price": 23423,

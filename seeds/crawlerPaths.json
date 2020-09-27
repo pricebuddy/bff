@@ -1,0 +1,10 @@
+[{
+    "sellerId" : "13C4B1AA-30DB-4AFB-9FC6-FB913999A86B",
+    "pricePath" : "string(//div[@class='item-price offer-price price-tc cencosud-price-2']/text())",
+    "skuPath" : "string(//p[@class='pull-right']/text())"
+},
+{
+    "sellerId" : "38B93994-CC0B-4780-8266-B9123953D75A",
+    "pricePath" : "string(//li[@class='product-internet-price-not-best']/span[@class='product-price'])",
+    "skuPath" : "string(//section[@class='product-header hidden-xs']/small/span[@class='sku'])"
+}]
