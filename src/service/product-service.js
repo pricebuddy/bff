@@ -7,11 +7,11 @@ const axios = require('axios');
 const DomainRepository = require('../repository/domain-repositories');
 
 const { getCompetitors } = require('../use-cases/get-sellers');
+const { getMasterProduct } = require('../use-cases/get-master-product');
 const { getProductsBySellerId, getCompetitorProductByParentIdAndCompetitorId } = require('../use-cases/get-products');
 
 const getRecommendation = async (currentPrice, competitorPrices) => {
   const competitorPrice = competitorPrices.map((item) => item.price).filter(Boolean);
-
   const competitorStock = competitorPrices.map((item) => item.stock);
 
   const response = await axios.post('http://127.0.0.1:3000/v1/process', {
@@ -40,13 +40,15 @@ const getProducts = async (fastify, req, reply) => {
     try {
       const competitorPrices = [];
 
+      const masterProduct = await getMasterProduct(product.parentId, domainRepository);
+
       for (const competitor of competitors) {
         const competitorProduct = await
         getCompetitorProductByParentIdAndCompetitorId(product.parentId, competitor.id, domainRepository);
 
         const competitorPrice = competitorProduct ? {
           competitorsName: competitor.name,
-          price: competitorProduct.price.trim(),
+          price: parseInt(competitorProduct.price.trim(), 10),
           competitorsUrl: competitorProduct.url,
           stock: 1,
         } : {
@@ -56,10 +58,15 @@ const getProducts = async (fastify, req, reply) => {
         competitorPrices.push(competitorPrice);
       }
 
-      const recommendation = await
-      getRecommendation(product.price, competitorPrices);
+      const recommendation = await getRecommendation(product.price, competitorPrices);
 
-      response.push({ ...product, competitorPrices, recommendation });
+      response.push({
+        ...product,
+        name: masterProduct.name,
+        price: parseInt(product.price, 10),
+        competitorPrices,
+        recommendation,
+      });
     } catch (error) {
       fastify.log.error(`error ${error}`);
     }
@@ -71,28 +78,3 @@ const getProducts = async (fastify, req, reply) => {
 module.exports = {
   getProducts,
 };
-
-//     "name": "nombre",
-//     "thumbnail": "revisar",
-//     "price": 23423,
-//     "createdAt": Date,
-//     "lastModifiedAt": Date,
-//     "sku": "string",
-//     "marketPrices": [
-//       {
-//         "price": 313221,
-//         "competitorsName": "asdas",
-//         "competitorsUrl": "https://paris.cl",
-//         "shippingPrice": {
-//           "min": 23312,
-//           "max": 2342344,
-//         },
-//         "createdAt": Date,
-//         "lastModifiedAt": Date,
-//       }
-//     ],
-//     suggestion: {
-//         "price": "increase",
-//         "message": "Sube tu precio ☝️"
-//     }
-//   }
