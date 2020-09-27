@@ -26,7 +26,7 @@ const makeRepository = (fastify) => {
 
     const res = await collection.find({ ally: false });
 
-    return res;
+    return res.toArray();
   };
 
   return {

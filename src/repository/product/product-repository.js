@@ -10,28 +10,18 @@ const makeRepository = (fastify) => {
     return res.toArray();
   };
 
-  const selectByParentId = async (parentId) => {
+  const selectCompetitorProductsByParentId = async (parentId, competitorIds) => {
     const { db } = fastify.mongo;
 
     const collection = db.collection('products');
-    const query = { parentId };
+    const query = { parentId, sellerId: { $in: competitorIds } };
 
     const res = await collection.find(query);
 
     return res.toArray();
   };
 
-  const updateSellerProduct = async (product) => {
-    const { db } = fastify.mongo;
-
-    const collection = db.collection('productsasdasdasd');
-
-    const res = await collection.save(product);
-
-    return res;
-  };
-
-  return { selectByParentId, sellectProductsBySeller, updateSellerProduct };
+  return { selectCompetitorProductsByParentId, sellectProductsBySeller };
 };
 
 module.exports = makeRepository;

@@ -3,9 +3,10 @@ const getProductsBySellerId = async (sellerId, repositories) => {
   return response;
 };
 
-const getProductsByParentId = async (parentId, repositories) => {
-  const response = await repositories.productRepository.selectByParentId(parentId);
+const getCompetitorProductsByParentId = async (parentId, competitorIds, repositories) => {
+  const response = await
+  repositories.productRepository.selectCompetitorProductsByParentId(parentId, competitorIds);
   return response;
 };
 
-module.exports = { getProductsBySellerId, getProductsByParentId };
+module.exports = { getProductsBySellerId, getCompetitorProductsByParentId };

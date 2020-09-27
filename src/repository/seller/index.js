@@ -9,6 +9,10 @@ class SellerRepository {
   selectAll() {
     return this.repository.selectAll();
   }
+
+  selectAllCompetitors() {
+    return this.repository.selectAllCompetitors();
+  }
 }
 
 module.exports = SellerRepository;

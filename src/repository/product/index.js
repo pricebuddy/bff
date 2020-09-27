@@ -10,8 +10,8 @@ class ProductRepository {
     return this.repository.sellectProductsBySeller(sellerId);
   }
 
-  selectByParentId(parentId) {
-    return this.repository.selectByParentId(parentId);
+  selectCompetitorProductsByParentId(parentId, competitorIds) {
+    return this.repository.selectCompetitorProductsByParentId(parentId, competitorIds);
   }
 
   updateSellerProduct(product) {
